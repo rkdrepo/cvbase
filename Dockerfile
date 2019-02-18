@@ -5,4 +5,6 @@ RUN apt-get update && \
     /opt/conda/bin/conda install opencv -y
 
 RUN apt-get update && \
+    apt-get install -y build-essential && \
+    pip install cmake && \
     pip install  request  hug
