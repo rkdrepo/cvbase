@@ -120,7 +120,7 @@ RUN apk update && apk upgrade && apk --no-cache add \
 #pip install numpy
 
 # Install OpenCV
-RUN mkdir /opt && cd /opt && \
+RUN cd /opt && \
 git clone https://github.com/opencv/opencv.git && \
   git clone https://github.com/opencv/opencv_contrib.git && \
   && \
@@ -129,12 +129,17 @@ git clone https://github.com/opencv/opencv.git && \
     -D CMAKE_C_COMPILER=/usr/bin/clang \
     -D CMAKE_CXX_COMPILER=/usr/bin/clang++ \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
-    -D INSTALL_PYTHON_EXAMPLES=OFF \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
     -D INSTALL_C_EXAMPLES=OFF \
     -D WITH_FFMPEG=ON \
     -D WITH_TBB=ON \
     -D OPENCV_EXTRA_MODULES_PATH=/opt/opencv_contrib/modules \
     -D PYTHON_EXECUTABLE=/opt/conda/bin/python \
+    -D BUILD_NEW_PYTHON_SUPPORT=ON \
+    -D BUILD_PYTHON_SUPPORT=ON \
+    -D PYTHON_INCLUDE_DIR=/opt/conda/include/python3.7m \
+    -D PYTHON_LIBRARY=/opt/conda/lib/libpython3.7m.so \
+    -D BUILD_opencv_python3=yes \
     .. \
   && \
   make -j$(nproc) && make install && cd .. && rm -rf build 
